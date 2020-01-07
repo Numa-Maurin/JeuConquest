@@ -3,6 +3,7 @@ package fr.umontpellier.iut.conquest;
 import fr.umontpellier.iut.conquest.strategies.Strategy;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -110,7 +111,7 @@ public class Game {
      * Initialise le jeu.
      */
     private void initGame() {
-        throw new RuntimeException("Not implemented");
+        getBoard().initField(players[0], players[1]);
     }
 
     /**
@@ -132,12 +133,20 @@ public class Game {
      * - La partie est finie quand l'un des deux joueurs n'a plus de pions.
      */
     public boolean isFinished() {
-        for(Player p : getPlayers()){
-          if(p.getGame()){
-              return false;
-          }
+        if (getBoard().getNbPawns(players[0]) == 0 || getBoard().getNbPawns(players[1]) == 0){
+            return true;
         }
-        return true;
+        else{
+            for(int i = 0 ; i < getBoard().getSize()-1; i++){
+                for(int j = 0 ; j < getBoard().getSize()-1; j++){
+                    if(getBoard().caseIsEmpty(i,j)){
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
     }
 
     /**
@@ -145,12 +154,12 @@ public class Game {
      * Rappel : Le joueur qui gagne est celui qui possède le plus de pions.
      */
     public Player getWinner() {
-        if(getBoard().caseIsEmpty())
-        for(Player p : getPlayers()){
-            getBoard().getNbPawns(p);
+        if(getBoard().getNbPawns(players[0]) - getBoard().getNbPawns(players[1])>0){
+            return players[0];
         }
-        return
-
+        else{
+            return players[1];
+        }
     }
 
     /**
