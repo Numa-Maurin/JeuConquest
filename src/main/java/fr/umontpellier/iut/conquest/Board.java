@@ -92,7 +92,19 @@ public class Board {
      * - La case d'arrivée doit être libre.
      * - La distance entre la case d'arrivée est au plus 2.
      */
-    public boolean isValid(Move move, Player player) { throw new RuntimeException("Not implemented"); }
+    public boolean isValid(Move move, Player player) {
+        if(move.getColumn2()<field.length-1 && move.getRow2() < field.length-1){
+            if(player.equals(field[move.getRow1()][move.getColumn1()].getPlayer())){
+                if(!caseIsEmpty(move.getRow2(),move.getColumn2())){
+                    if(move.getRow2() <= move.getRow1()+2||move.getRow2()<= move.getRow1()-2 && move.getColumn2() <= move.getColumn1() + 2 || move.getColumn2() <= move.getColumn1() -2){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+
+    }
 
     /**
      * Déplace un pion.
