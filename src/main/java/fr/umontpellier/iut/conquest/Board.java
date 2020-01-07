@@ -121,4 +121,13 @@ public class Board {
     public int getNbPawns(Player player) {
         throw new RuntimeException("Not implemented");
     }
+
+
+    /*Vérifie si la case est vie*/
+    public boolean caseIsEmpty(int row, int column){
+        if(field[row][column] == null){
+            return true;
+        }
+        return false;
+    }
 }
