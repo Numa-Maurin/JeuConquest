@@ -110,7 +110,6 @@ public class Game {
      * Initialise le jeu.
      */
     private void initGame() {
-        
         throw new RuntimeException("Not implemented");
     }
 
@@ -146,6 +145,7 @@ public class Game {
      * Rappel : Le joueur qui gagne est celui qui possède le plus de pions.
      */
     public Player getWinner() {
+        if(getBoard().caseIsEmpty())
         for(Player p : getPlayers()){
             getBoard().getNbPawns(p);
         }
