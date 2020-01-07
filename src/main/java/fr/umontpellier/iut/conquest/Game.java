@@ -117,7 +117,12 @@ public class Game {
      * Prends un joueur en entrée et retourne l'autre joueur.
      */
     public Player getOtherPlayer(Player player) {
-        throw new RuntimeException("Not implemented");
+        if(player.equals(players[0])){
+            return players[1];
+        }
+        else{
+            return players[0];
+        }
     }
 
     /**
