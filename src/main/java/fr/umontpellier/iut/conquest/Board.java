@@ -78,7 +78,10 @@ public class Board {
      * - player2 commence le jeu avec un pion en haut à droite et un pion en bas à gauche.
      */
     public void initField(Player player1, Player player2) {
-        throw new RuntimeException("Not implemented");
+        field[0][0] = new Pawn(player1);
+        field[field.length-1][field.length-1] = new Pawn(player1);
+        field[0][field.length-1] = new Pawn(player2);
+        field[field.length-1][0] = new Pawn(player2);
     }
 
     /**
@@ -89,9 +92,7 @@ public class Board {
      * - La case d'arrivée doit être libre.
      * - La distance entre la case d'arrivée est au plus 2.
      */
-    public boolean isValid(Move move, Player player) {
-        throw new RuntimeException("Not implemented");
-    }
+    public boolean isValid(Move move, Player player) { throw new RuntimeException("Not implemented"); }
 
     /**
      * Déplace un pion.
@@ -115,7 +116,7 @@ public class Board {
     }
 
     /**
-     * Retourne la liste de tous les pions d'un joueur.
+     * Retourne le nombre de pions d'un joueur.
      */
     public int getNbPawns(Player player) {
         throw new RuntimeException("Not implemented");
