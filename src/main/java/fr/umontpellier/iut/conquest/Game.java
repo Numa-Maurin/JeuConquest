@@ -173,6 +173,8 @@ public class Game {
      * @return Player : le joueur dont il est le tour de jouer.
      */
     private Player confirmOrUndoMove(Player player) {
+        /*if pas le début du jeu*/
+        /*faire le move à l'envers*/
         throw new RuntimeException("Not implemented");
     }
 }
