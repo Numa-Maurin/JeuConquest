@@ -103,7 +103,6 @@ public class Board {
             }
         }
         return false;
-
     }
 
     /**
@@ -116,7 +115,14 @@ public class Board {
      *             - Dans tous les cas, une fois que le pion est déplacé, tous les pions se trouvant dans les cases adjacentes à sa case d'arrivée prennent sa couleur.
      */
     public void movePawn(Move move) {
-        throw new RuntimeException("Not implemented");
+        if(move.getRow2() == move.getRow1()+1 ||move.getRow2() == move.getRow1()-1 && move.getColumn2() == move.getColumn1() + 1 || move.getColumn2() == move.getColumn1() -1){
+            Pawn p1 = new Pawn(field[move.getRow1()][move.getColumn1()].getPlayer());
+            Pawn p2 = new Pawn(field[move.getRow2()][move.getColumn2()].getPlayer());
+        }
+        if(move.getRow2() == move.getRow1()+2 ||move.getRow2() == move.getRow1()-2 && move.getColumn2() == move.getColumn1() + 2 || move.getColumn2() == move.getColumn1() -2){
+            field[move.getRow1()][move.getColumn1()]=null;
+            Pawn p2 = new Pawn(field[move.getRow2()][move.getColumn2()].getPlayer());
+        }
     }
 
     /**
@@ -124,7 +130,7 @@ public class Board {
      * S'il n'y a de coup valide, retourne une liste vide.
      */
     public List<Move> getValidMoves(Player player) {
-        throw new RuntimeException("Not implemented");
+        throw new RuntimeException("Not move.getRow2(),move.getColumn2()implemented");
     }
 
     /**
