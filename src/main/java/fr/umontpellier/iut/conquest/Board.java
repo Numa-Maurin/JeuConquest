@@ -1,6 +1,5 @@
 package fr.umontpellier.iut.conquest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -113,8 +112,7 @@ public class Board {
      * S'il n'y a de coup valide, retourne une liste vide.
      */
     public List<Move> getValidMoves(Player player) {
-        List<Move> liste = new ArrayList<>();
-
+        throw new RuntimeException("Not implemented");
     }
 
     /**
