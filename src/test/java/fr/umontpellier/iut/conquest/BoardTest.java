@@ -75,67 +75,67 @@ class BoardTest {
         assertFalse(b.isValid(new Move(-1, 0, 0, 1), player1));
     }
 
-    @Disabled
+
     @Test
     void a_move_that_starts_from_a_negative_column_should_be_invalid() {
         assertFalse(b.isValid(new Move(0, -1, 0, 1), player1));
     }
 
-    @Disabled
+
     @Test
     void a_move_that_starts_from_too_large_row_should_be_invalid() {
         assertFalse(b.isValid(new Move(b.getSize(), 0, 0, 1), player1));
     }
 
-    @Disabled
+
     @Test
     void a_move_that_starts_from_too_large_column_should_be_invalid() {
         assertFalse(b.isValid(new Move(0, b.getSize(), 0, 1), player1));
     }
 
-    @Disabled
+
     @Test
     void a_move_that_ends_in_a_negative_row_should_be_invalid() {
         assertFalse(b.isValid(new Move(0, 0, -1, 1), player1));
     }
 
-    @Disabled
+
     @Test
     void a_move_that_ends_in_a_negative_column_should_be_invalid() {
         assertFalse(b.isValid(new Move(0, 0, 0, -1), player1));
     }
 
-    @Disabled
+
     @Test
     void a_move_that_ends_in_a_too_large_row_should_be_invalid() {
         assertFalse(b.isValid(new Move(0, 0, b.getSize(), 1), player1));
     }
 
-    @Disabled
+
     @Test
     void a_move_that_ends_in_a_too_large_column_should_be_invalid() {
         assertFalse(b.isValid(new Move(0, 0, 0, b.getSize()), player1));
     }
 
-    @Disabled
+
     @Test
     void player1_should_not_be_able_to_move_a_pawn_that_does_not_exist() {
         assertFalse(b.isValid(new Move(0, 1, 0, 2), player1));
     }
 
-    @Disabled
+
     @Test
     void player2_should_not_be_able_to_move_a_pawn_that_does_not_exist() {
         assertFalse(b.isValid(new Move(0, 1, 0, 2), player2));
     }
 
-    @Disabled
+
     @Test
     void player2_should_not_be_able_to_move_a_pawn_from_player1() {
         assertFalse(b.isValid(new Move(0, 0, 0, 1), player2));
     }
 
-    @Disabled
+
     @Test
     void player1_should_not_be_able_to_move_a_pawn_from_player2() {
         assertFalse(b.isValid(new Move(0, b.getSize() - 1, 0, b.getSize() - 2), player1));
