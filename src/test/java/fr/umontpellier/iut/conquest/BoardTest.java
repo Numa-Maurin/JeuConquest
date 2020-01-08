@@ -32,31 +32,31 @@ class BoardTest {
         b.initField(player1, player2);
     }
 
-    @Disabled
+
     @Test
     void at_the_start_top_left_pawn_should_belong_to_player1() {
         assertEquals(1, b.getField()[0][0].getPlayer().getColor());
     }
 
-    @Disabled
+
     @Test
     void at_the_start_bottom_right_pawn_should_belong_to_player1() {
         assertEquals(1, b.getField()[b.getSize() - 1][b.getSize() - 1].getPlayer().getColor());
     }
 
-    @Disabled
+
     @Test
     void at_the_start_top_right_pawn_should_belong_to_player2() {
         assertEquals(2, b.getField()[0][b.getSize() - 1].getPlayer().getColor());
     }
 
-    @Disabled
+
     @Test
     void at_the_start_bottom_right_pawn_should_belong_to_player2() {
         assertEquals(2, b.getField()[b.getSize() - 1][0].getPlayer().getColor());
     }
 
-    @Disabled
+
     @Test
     void at_the_start_every_pawn_must_be_free_except_for_corner_pawns() {
         Pawn[][] tab = b.getField();
@@ -69,7 +69,7 @@ class BoardTest {
         }
     }
 
-    @Disabled
+
     @Test
     void a_move_that_starts_from_a_negative_row_should_be_invalid() {
         assertFalse(b.isValid(new Move(-1, 0, 0, 1), player1));

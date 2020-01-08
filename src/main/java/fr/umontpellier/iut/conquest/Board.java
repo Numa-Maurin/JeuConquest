@@ -93,11 +93,17 @@ public class Board {
      * - La distance entre la case d'arrivée est au plus 2.
      */
     public boolean isValid(Move move, Player player) {
-        if(move.getColumn2()<field.length-1 && move.getRow2() < field.length-1){
-            if(player.equals(field[move.getRow1()][move.getColumn1()].getPlayer())){
-                if(!caseIsEmpty(move.getRow2(),move.getColumn2())){
-                    if(move.getRow2() <= move.getRow1()+2||move.getRow2()<= move.getRow1()-2 && move.getColumn2() <= move.getColumn1() + 2 || move.getColumn2() <= move.getColumn1() -2){
-                        return true;
+        int col1 = move.getColumn1();
+        int col2 = move.getRow1();
+        int line1 = move.getColumn2();
+        int line2 = move.getRow2();
+        if (line1 >0 && col1>0 && line2>0 && col2 >0) {
+            if (move.getColumn2() < field.length - 1 && move.getRow2() < field.length - 1) {
+                if (player.equals(field[move.getRow1()][move.getColumn1()].getPlayer())) {
+                    if (!caseIsEmpty(move.getRow2(), move.getColumn2())) {
+                        if (col2 <= col1 + 2 || col2 <= col1 - 2 && line2 <= line1 + 2 || line2 <= line1 - 2) {
+                            return true;
+                        }
                     }
                 }
             }
