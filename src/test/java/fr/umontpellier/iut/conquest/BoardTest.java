@@ -135,7 +135,6 @@ class BoardTest {
         assertFalse(b.isValid(new Move(0, 0, 0, 1), player2));
     }
 
-
     @Test
     void player1_should_not_be_able_to_move_a_pawn_from_player2() {
         assertFalse(b.isValid(new Move(0, b.getSize() - 1, 0, b.getSize() - 2), player1));
