@@ -94,20 +94,27 @@ public class Board {
      * - La distance entre la case d'arrivée est au plus 2.
      */
     public boolean isValid(Move move, Player player) {
-        int col1 = move.getColumn1();
-        int col2 = move.getRow1();
-        int line1 = move.getColumn2();
-        int line2 = move.getRow2();
-        if (line1 >0 && col1>0 && line2>0 && col2 >0) {
-            if (move.getColumn2() < field.length - 1 && move.getRow2() < field.length - 1) {
-                if (player.equals(field[move.getRow1()][move.getColumn1()].getPlayer())) {
-                    if (!caseIsEmpty(move.getRow2(), move.getColumn2())) {
-                        if (col2 <= col1 + 2 || col2 <= col1 - 2 && line2 <= line1 + 2 || line2 <= line1 - 2) {
-                            return true;
-                        }
-                    }
-                }
-            }
+        if (move != null) {
+            return CoordonnesInField(move) && PawnAndPlayers(player, move) && CaseFree(move) && DistanceLessThan2(move);
+        }
+        return false;
+    }
+
+    public boolean CoordonnesInField (Move move){
+        return move.getColumn2() <= field.length - 1 && move.getColumn1() <= field.length - 1 && move.getColumn2() >= 0 && move.getColumn1() >= 0 && move.getRow2() <= field.length - 1 && move.getRow1() <= field.length - 1 && move.getRow2() >= 0 && move.getRow1() >= 0;
+    }
+
+    public boolean PawnAndPlayers(Player player, Move move){
+        return player.getColor() == field[move.getRow1()][move.getColumn1()].getPlayer().getColor();
+    }
+
+    public boolean CaseFree(Move move){
+        return caseIsEmpty(move.getRow2(), move.getColumn2());
+    }
+
+    public  boolean DistanceLessThan2(Move move){
+        if (Math.abs(move.getColumn2() - move.getColumn1()) <= 2 && Math.abs (move.getRow2() - move.getRow1()) <= 2 ){
+            return true;
         }
         return false;
     }
@@ -122,11 +129,11 @@ public class Board {
      *             - Dans tous les cas, une fois que le pion est déplacé, tous les pions se trouvant dans les cases adjacentes à sa case d'arrivée prennent sa couleur.
      */
     public void movePawn(Move move) {
-        if(move.getRow2() == move.getRow1()+1 ||move.getRow2() == move.getRow1()-1 && move.getColumn2() == move.getColumn1() + 1 || move.getColumn2() == move.getColumn1() -1){
+        if(Math.abs(move.getRow2() - move.getRow1()) == 1 && Math.abs(move.getColumn2() - move.getColumn1())== 1){
             Pawn p1 = new Pawn(field[move.getRow1()][move.getColumn1()].getPlayer());
             Pawn p2 = new Pawn(field[move.getRow2()][move.getColumn2()].getPlayer());
         }
-        if(move.getRow2() == move.getRow1()+2 ||move.getRow2() == move.getRow1()-2 && move.getColumn2() == move.getColumn1() + 2 || move.getColumn2() == move.getColumn1() -2){
+        if(Math.abs(move.getRow2() - move.getRow1()) == 2 && Math.abs(move.getColumn2() - move.getColumn1())== 2){
             field[move.getRow1()][move.getColumn1()]=null;
             Pawn p2 = new Pawn(field[move.getRow2()][move.getColumn2()].getPlayer());
         }
@@ -142,7 +149,11 @@ public class Board {
         for (int i = 0; i < field.length; i++){
             for(int j = 0; j < field.length; j++){
                 if(player.equals(field[i][j].getPlayer())){
-                    l.add(new Move(i,j,i,j));
+                    for (int i2 = 0; i2 < field.length; i2++) {
+                        for (int j2 = 0; j2 < field.length; j2++) {
+                            l.add(new Move(i, j, i2, j2));
+                        }
+                    }
                 }
             }
         }

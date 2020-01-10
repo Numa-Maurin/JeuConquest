@@ -140,7 +140,7 @@ class BoardTest {
         assertFalse(b.isValid(new Move(0, b.getSize() - 1, 0, b.getSize() - 2), player1));
     }
 
-    @Disabled
+
     @Test
     void a_pawn_should_be_able_to_move_to_a_free_cell() {
         assertTrue(b.isValid(new Move(0, 0, 0, 1), player1));
@@ -153,25 +153,25 @@ class BoardTest {
         assertFalse(b.isValid(new Move(0, 0, 0, 1), player1));
     }
 
-    @Disabled
+
     @Test
     void a_pawn_should_be_able_to_move_one_cell_right() {
         assertTrue(b.isValid(new Move(0, 0, 0, 1), player1));
     }
 
-    @Disabled
+
     @Test
     void a_pawn_should_be_able_to_move_one_cell_left() {
         assertTrue(b.isValid(new Move(0, b.getSize() - 1, 0, b.getSize() - 2), player2));
     }
 
-    @Disabled
+
     @Test
     void a_pawn_should_be_able_to_move_one_cell_up() {
         assertTrue(b.isValid(new Move(b.getSize() - 1, b.getSize() - 1, b.getSize() - 2, b.getSize() - 1), player1));
     }
 
-    @Disabled
+
     @Test
     void a_pawn_should_be_able_to_move_one_cell_down() {
         assertTrue(b.isValid(new Move(0, 0, 1, 0), player1));
@@ -183,25 +183,25 @@ class BoardTest {
         assertTrue(b.isValid(new Move(b.getSize() - 1, b.getSize() - 1, b.getSize() - 2, b.getSize() - 2), player1));
     }
 
-    @Disabled
+
     @Test
     void a_pawn_should_be_able_to_move_one_cell_up_right() {
         assertTrue(b.isValid(new Move(b.getSize() - 1, 0, b.getSize() - 2, 1), player2));
     }
 
-    @Disabled
+
     @Test
     void a_pawn_should_be_able_to_move_one_cell_down_left() {
         assertTrue(b.isValid(new Move(0, b.getSize() - 1, 1, b.getSize() - 2), player2));
     }
 
-    @Disabled
+
     @Test
     void a_pawn_should_be_able_to_move_one_cell_down_right() {
         assertTrue(b.isValid(new Move(0, 0, 1, 1), player1));
     }
 
-    @Disabled
+
     @Test
     void a_pawn_that_moved_one_cell_right_should_clone_itself() {
         b.movePawn(new Move(0, 0, 0, 1));
