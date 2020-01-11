@@ -140,10 +140,11 @@ public class Board {
             field[move.getRow2()][move.getColumn2()] = p2;
             field[move.getRow1()][move.getColumn1()]=null;
         }
-        if(field[move.getRow1()][move.getColumn1()])
-        for (int i = -1; i < 2; i++) {
-            for (int j = -1; j < 2; j++) {
-                field[move.getRow2() - i][move.getColumn2() - j] = new Pawn(field[move.getRow1()][move.getColumn1()].getPlayer());
+        if(field[move.getRow1()][move.getColumn1()] != null && field[move.getRow2()][move.getColumn2()] != null) {
+            for (int i = -1; i < 2; i++) {
+                for (int j = -1; j < 2; j++) {
+                    field[move.getRow2() - i][move.getColumn2() - j] = new Pawn(field[move.getRow1()][move.getColumn1()].getPlayer());
+                }
             }
         }
 
