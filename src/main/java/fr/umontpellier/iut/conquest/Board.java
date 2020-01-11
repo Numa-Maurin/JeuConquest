@@ -140,28 +140,15 @@ public class Board {
             if(Math.abs(move.getRow2() - move.getRow1()) == 2 || Math.abs(move.getColumn2() - move.getColumn1())== 2){
                 field[move.getRow1()][move.getColumn1()]=null;
             }
-            Move move1 = new Move(move.getRow2(),move.getColumn2(),move.getRow2() - 1, move.getColumn2());
-            Move move2 = new Move(move.getRow2(),move.getColumn2(),move.getRow2() + 1, move.getColumn2() );
-            Move move3 = new Move(move.getRow2(),move.getColumn2(),move.getRow2(), move.getColumn2() - 1 );
-            Move move4 = new Move(move.getRow2(),move.getColumn2(),move.getRow2(), move.getColumn2() + 1);
+            for (int i = -1; i<=1;i++) {
+                for(int j = -1; j<=1;j++) {
+                    Move move1 = new Move(move.getRow2()-i, move.getColumn2()-j, move.getRow2()-i, move.getColumn2() -j);
 
-            if(isValid(move1,player) && !caseIsEmpty(move.getRow2()-1,move.getColumn2()) && !PawnAndPlayers(player,move1)){
-                movePawn(move1);
+                    if (isValid(move1, player) && !caseIsEmpty(move.getRow2() - i, move.getColumn2()) && !PawnAndPlayers(player, move1)) {
+                        movePawn(move1);
+                    }
+                }
             }
-
-            if(isValid(move2,player) && !caseIsEmpty(move.getRow2()+1,move.getColumn2()) && !PawnAndPlayers(player,move2)){
-                movePawn(move2);
-            }
-
-            if(isValid(move3,player) && !caseIsEmpty(move.getRow2(),move.getColumn2()-1) && !PawnAndPlayers(player,move3)){
-                movePawn(move3);
-            }
-
-            if(isValid(move4,player) && !caseIsEmpty(move.getRow2(),move.getColumn2()+1) && !PawnAndPlayers(player,move4)){
-                movePawn(move4);
-            }
-
-
         }
     }
 
@@ -169,7 +156,6 @@ public class Board {
      * Retourne la liste de tous les coups valides de Hplayer.
      * S'il n'y a de coup valide, retourne une liste vide.
      */
-    // a modifié quand je serai bouillanthhf
     public List<Move> getValidMoves(Player player) {
         List l = new ArrayList<Move>();
         for (int i = 0; i < field.length; i++){
