@@ -155,7 +155,7 @@ public class Board {
      * Retourne la liste de tous les coups valides de Hplayer.
      * S'il n'y a de coup valide, retourne une liste vide.
      */
-    // a modifié quand je serai bouillant
+    // a modifié quand je serai bouillanthhf
     public List<Move> getValidMoves(Player player) {
         List l = new ArrayList<Move>();
         for (int i = 0; i < field.length; i++){
