@@ -146,7 +146,6 @@ class BoardTest {
         assertTrue(b.isValid(new Move(0, 0, 0, 1), player1));
     }
 
-    @Disabled
     @Test
     void a_pawn_should_not_be_able_to_move_to_an_occupied_cell() {
         b.movePawn(new Move(0, 0, 0, 1));
@@ -177,7 +176,6 @@ class BoardTest {
         assertTrue(b.isValid(new Move(0, 0, 1, 0), player1));
     }
 
-    @Disabled
     @Test
     void a_pawn_should_be_able_to_move_one_cell_up_left() {
         assertTrue(b.isValid(new Move(b.getSize() - 1, b.getSize() - 1, b.getSize() - 2, b.getSize() - 2), player1));

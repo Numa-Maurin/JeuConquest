@@ -132,21 +132,37 @@ public class Board {
      *             - Dans tous les cas, une fois que le pion est déplacé, tous les pions se trouvant dans les cases adjacentes à sa case d'arrivée prennent sa couleur.
      */
     public void movePawn(Move move) {
-        Pawn p2 = new Pawn(field[move.getRow1()][move.getColumn1()].getPlayer());
-            field[move.getRow1()][move.getColumn1()] = p2;
 
-        if(Math.abs(move.getRow2() - move.getRow1()) == 2 || Math.abs(move.getColumn2() - move.getColumn1())== 2){
-            field[move.getRow1()][move.getColumn1()]=null;
-        }
-
-        if(field[move.getRow1()][move.getColumn1()] != null && field[move.getRow2()][move.getColumn2()] != null) {
-            for (int i = -1; i < 2; i++) {
-                for (int j = -1; j < 2; j++) {
-                    field[move.getRow2() - i][move.getColumn2() - j] = new Pawn(field[move.getRow2()][move.getColumn2()].getPlayer());
-                }
+        if(isValid(move, field[move.getRow1()][move.getColumn1()].getPlayer())){
+            Player player = field[move.getRow1()][move.getColumn1()].getPlayer();
+            Pawn pawn = new Pawn(player);
+            field[move.getRow2()][move.getColumn2()] = pawn;
+            if(Math.abs(move.getRow2() - move.getRow1()) == 2 || Math.abs(move.getColumn2() - move.getColumn1())== 2){
+                field[move.getRow1()][move.getColumn1()]=null;
             }
-        }
+            Move move1 = new Move(move.getRow2(),move.getColumn2(),move.getRow2() - 1, move.getColumn2());
+            Move move2 = new Move(move.getRow2(),move.getColumn2(),move.getRow2() + 1, move.getColumn2() );
+            Move move3 = new Move(move.getRow2(),move.getColumn2(),move.getRow2(), move.getColumn2() - 1 );
+            Move move4 = new Move(move.getRow2(),move.getColumn2(),move.getRow2(), move.getColumn2() + 1);
 
+            if(isValid(move1,player) && !caseIsEmpty(move.getRow2()-1,move.getColumn2()) && !PawnAndPlayers(player,move1)){
+                movePawn(move1);
+            }
+
+            if(isValid(move2,player) && !caseIsEmpty(move.getRow2()+1,move.getColumn2()) && !PawnAndPlayers(player,move2)){
+                movePawn(move2);
+            }
+
+            if(isValid(move3,player) && !caseIsEmpty(move.getRow2(),move.getColumn2()-1) && !PawnAndPlayers(player,move3)){
+                movePawn(move3);
+            }
+
+            if(isValid(move4,player) && !caseIsEmpty(move.getRow2(),move.getColumn2()+1) && !PawnAndPlayers(player,move4)){
+                movePawn(move4);
+            }
+
+
+        }
     }
 
     /**
@@ -158,7 +174,7 @@ public class Board {
         List l = new ArrayList<Move>();
         for (int i = 0; i < field.length; i++){
             for(int j = 0; j < field.length; j++){
-                if(player.equals(field[i][j].getPlayer())){
+                if(!caseIsEmpty(i, j) && player.equals(field[i][j].getPlayer())){
                     for (int i2 = 0; i2 < field.length; i2++) {
                         for (int j2 = 0; j2 < field.length; j2++) {
                             Move m = new Move(i, j, i2, j2);
@@ -180,7 +196,7 @@ public class Board {
         int nbPawn = 0;
         for (int i = 0; i < field.length; i++){
             for (int j = 0; j < field.length; j++){
-                if(player.equals(field[i][j].getPlayer())){
+                if(!caseIsEmpty(i, j) && player.equals(field[i][j].getPlayer())){
                     nbPawn ++;
                 }
             }
