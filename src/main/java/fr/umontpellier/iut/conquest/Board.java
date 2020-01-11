@@ -133,10 +133,12 @@ public class Board {
      */
     public void movePawn(Move move) {
         Pawn p2 = new Pawn(field[move.getRow1()][move.getColumn1()].getPlayer());
-            field[move.getRow2()][move.getColumn2()] = p2;
+            field[move.getRow1()][move.getColumn1()] = p2;
+
         if(Math.abs(move.getRow2() - move.getRow1()) == 2 || Math.abs(move.getColumn2() - move.getColumn1())== 2){
             field[move.getRow1()][move.getColumn1()]=null;
         }
+
         if(field[move.getRow1()][move.getColumn1()] != null && field[move.getRow2()][move.getColumn2()] != null) {
             for (int i = -1; i < 2; i++) {
                 for (int j = -1; j < 2; j++) {
