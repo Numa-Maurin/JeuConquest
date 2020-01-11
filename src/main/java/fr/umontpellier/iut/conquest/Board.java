@@ -93,23 +93,7 @@ public class Board {
      * - La case d'arrivée doit être libre.
      * - La distance entre la case d'arrivée est au plus 2.
      */
-    public boolean isValid(Move move, Player player) {/*
-        int col1 = move.getColumn1();
-        int row1 = move.getRow1();
-        int col2 = move.getColumn2();
-        int row2 = move.getRow2();
-        if (row1 > 0 && col1>0 && row1 > 0 && col2 > 0){
-            if(move.getColumn2() < field.length - 1 && move.getRow2() < field.length - 1){
-                if(player.equals(field[move.getRow1()][move.getColumn1()].getPlayer())){
-                    if(!caseIsEmpty(move.getRow2(), move.getColumn2())){
-                        if(col2 <= col1 + 2 || col2 <= col1 - 2 && row2 <= row1 + 2 || row2 <= row1 - 2){
-                            return true;
-                        }
-                    }
-                }
-            }
-        }*/
-
+    public boolean isValid(Move move, Player player) {
         if (move != null) {
             return CoordonnesInField(move) && PawnAndPlayers(player, move) && CaseFree(move) && DistanceLessThan2(move);
         }
@@ -125,14 +109,13 @@ public class Board {
             return player.equals(field[move.getRow1()][move.getColumn1()].getPlayer());
         }
         return false;
-
     }
 
     public boolean CaseFree(Move move){
         return caseIsEmpty(move.getRow2(), move.getColumn2());
     }
 
-    public  boolean DistanceLessThan2(Move move){
+    public boolean DistanceLessThan2(Move move){
         if (Math.abs(move.getColumn2() - move.getColumn1()) <= 2 && Math.abs (move.getRow2() - move.getRow1()) <= 2 ){
             return true;
         }
@@ -149,21 +132,30 @@ public class Board {
      *             - Dans tous les cas, une fois que le pion est déplacé, tous les pions se trouvant dans les cases adjacentes à sa case d'arrivée prennent sa couleur.
      */
     public void movePawn(Move move) {
+
+        Pawn p2 = new Pawn(field[move.getRow2()][move.getColumn2()].getPlayer());
+
         if(Math.abs(move.getRow2() - move.getRow1()) == 1 && Math.abs(move.getColumn2() - move.getColumn1())== 1){
             Pawn p1 = new Pawn(field[move.getRow1()][move.getColumn1()].getPlayer());
-            Pawn p2 = new Pawn(field[move.getRow2()][move.getColumn2()].getPlayer());
         }
         if(Math.abs(move.getRow2() - move.getRow1()) == 2 && Math.abs(move.getColumn2() - move.getColumn1())== 2){
             field[move.getRow1()][move.getColumn1()]=null;
-            Pawn p2 = new Pawn(field[move.getRow2()][move.getColumn2()].getPlayer());
+        }
+
+        else {
+            for (int i = -1; i < 2; i++) {
+                for (int j = -1; j < 2; j++) {
+                    field[move.getRow2() - i][move.getColumn2() - j] = new Pawn(field[move.getRow1()][move.getColumn1()].getPlayer());
+                }
+            }
         }
     }
 
     /**
-     * Retourne la liste de tous les coups valides de player.
+     * Retourne la liste de tous les coups valides de Hplayer.
      * S'il n'y a de coup valide, retourne une liste vide.
      */
-    // a modifié quand je serai bouillant salut
+    // a modifié quand je serai bouillant
     public List<Move> getValidMoves(Player player) {
         List l = new ArrayList<Move>();
         for (int i = 0; i < field.length; i++){
