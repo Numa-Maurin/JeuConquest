@@ -93,7 +93,23 @@ public class Board {
      * - La case d'arrivée doit être libre.
      * - La distance entre la case d'arrivée est au plus 2.
      */
-    public boolean isValid(Move move, Player player) {
+    public boolean isValid(Move move, Player player) {/*
+        int col1 = move.getColumn1();
+        int row1 = move.getRow1();
+        int col2 = move.getColumn2();
+        int row2 = move.getRow2();
+        if (row1 > 0 && col1>0 && row1 > 0 && col2 > 0){
+            if(move.getColumn2() < field.length - 1 && move.getRow2() < field.length - 1){
+                if(player.equals(field[move.getRow1()][move.getColumn1()].getPlayer())){
+                    if(!caseIsEmpty(move.getRow2(), move.getColumn2())){
+                        if(col2 <= col1 + 2 || col2 <= col1 - 2 && row2 <= row1 + 2 || row2 <= row1 - 2){
+                            return true;
+                        }
+                    }
+                }
+            }
+        }*/
+
         if (move != null) {
             return CoordonnesInField(move) && PawnAndPlayers(player, move) && CaseFree(move) && DistanceLessThan2(move);
         }
@@ -105,7 +121,11 @@ public class Board {
     }
 
     public boolean PawnAndPlayers(Player player, Move move){
-        return player.getColor() == field[move.getRow1()][move.getColumn1()].getPlayer().getColor();
+        if(field[move.getRow1()][move.getColumn1()] != null){
+            return player.equals(field[move.getRow1()][move.getColumn1()].getPlayer());
+        }
+        return false;
+
     }
 
     public boolean CaseFree(Move move){
@@ -143,7 +163,7 @@ public class Board {
      * Retourne la liste de tous les coups valides de player.
      * S'il n'y a de coup valide, retourne une liste vide.
      */
-    // a modifié quand je serai bouillant
+    // a modifié quand je serai bouillant salut
     public List<Move> getValidMoves(Player player) {
         List l = new ArrayList<Move>();
         for (int i = 0; i < field.length; i++){
@@ -151,7 +171,10 @@ public class Board {
                 if(player.equals(field[i][j].getPlayer())){
                     for (int i2 = 0; i2 < field.length; i2++) {
                         for (int j2 = 0; j2 < field.length; j2++) {
-                            l.add(new Move(i, j, i2, j2));
+                            Move m = new Move(i, j, i2, j2);
+                            if(isValid(m, player)){
+                                l.add(m);
+                            }
                         }
                     }
                 }
