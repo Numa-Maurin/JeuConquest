@@ -116,6 +116,7 @@ public class Game {
      */
     private void initGame() {
         getBoard().initField(players[0], players[1]);
+        boardCaretaker.addMemento(getBoard().saveToMemento());
     }
 
     /**
@@ -177,24 +178,31 @@ public class Game {
      * @return Player : le joueur dont il est le tour de jouer.
      */
     private Player confirmOrUndoMove(Player player) {
-        while(!boardCaretaker.mementos.isEmpty()){
+        if(!boardCaretaker.isEmpty()){
+            Memento memento = getBoard().saveToMemento();
             int reculer;
             System.out.println("Reculer (1) ou non (0) ?");
             reculer = scan.nextInt();
-            while(reculer >= 2 || reculer < 0){
+            scan.nextLine();
+
+            while(reculer < 0 || reculer > 1){
                 System.out.println("Veuillez saisir soit Reculer (1) soit Ne pas reculer (0)");
                 reculer = scan.nextInt();
+                scan.nextLine();
             }
-            if(reculer == 0){
+            if(reculer == 1 && !board.getValidMoves(player).isEmpty()){
                 board.undoFromMemento(boardCaretaker.getMemento());
+                board.movePawn(player.play());
+                player = confirmOrUndoMove(player);
             }
-            else {
-                boardCaretaker.addMemento(getBoard().saveToMemento());
+            else{
+                boardCaretaker.addMemento(memento);
             }
             return player;
         }
         System.out.println("Vous êtes au début de la partie, vous ne pouvez pas reculer");
         return player;
+
 
     }
 }

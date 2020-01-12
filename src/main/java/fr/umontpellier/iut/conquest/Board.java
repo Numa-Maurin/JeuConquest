@@ -213,8 +213,7 @@ public class Board {
     }
 
     public Memento saveToMemento() {
-        Memento memento = new Memento(this.field);
-        return memento;
+        return new Memento(this.field);
     }
 
     public void undoFromMemento(Memento memento){
