@@ -177,11 +177,11 @@ public class Game {
      * @return Player : le joueur dont il est le tour de jouer.
      */
     private Player confirmOrUndoMove(Player player) {
-        if(!boardCaretaker.isEmpty()){
+        while(!boardCaretaker.isEmpty()){
             int reculer;
             System.out.println("Reculer (1) ou non (0) ?");
             reculer = scan.nextInt();
-            while(reculer >= 0 && reculer <2){
+            while(reculer != 1 || reculer != 0){
                 System.out.println("Veuillez saisir soit Reculer (1) soit Ne pas reculer (0)");
                 reculer = scan.nextInt();
             }
