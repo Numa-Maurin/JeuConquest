@@ -10,9 +10,9 @@ public class Caretaker {
 
     {
 
-        Memento Memento= mementos.pop();
+        Memento memento= mementos.pop();
 
-        return Memento;
+        return memento;
 
     }
 

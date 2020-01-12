@@ -95,12 +95,12 @@ public class Board {
      */
     public boolean isValid(Move move, Player player) {
         if (move != null) {
-            return CoordonnesInField(move) && PawnAndPlayers(player, move) && CaseFree(move) && DistanceLessThan2(move);
+            return coordonnesInField(move) && PawnAndPlayers(player, move) && CaseFree(move) && DistanceLessThan2(move);
         }
         return false;
     }
 
-    public boolean CoordonnesInField (Move move){
+    public boolean coordonnesInField (Move move){
         return move.getColumn2() <= field.length - 1 && move.getColumn1() <= field.length - 1 && move.getColumn2() >= 0 && move.getColumn1() >= 0 && move.getRow2() <= field.length - 1 && move.getRow1() <= field.length - 1 && move.getRow2() >= 0 && move.getRow1() >= 0;
     }
 
@@ -116,7 +116,7 @@ public class Board {
     }
 
     public boolean DistanceLessThan2(Move move){
-        if (Math.abs(move.getColumn2() - move.getColumn1()) <= 2 && Math.abs (move.getRow2() - move.getRow1()) <= 2 ){
+        if (nbMovingMin(move ) <= 2 ){
             return true;
         }
         return false;
@@ -132,24 +132,21 @@ public class Board {
      *             - Dans tous les cas, une fois que le pion est déplacé, tous les pions se trouvant dans les cases adjacentes à sa case d'arrivée prennent sa couleur.
      */
     public void movePawn(Move move) {
-
-        if(isValid(move, field[move.getRow1()][move.getColumn1()].getPlayer())){
             Player player = field[move.getRow1()][move.getColumn1()].getPlayer();
             Pawn pawn = new Pawn(player);
             field[move.getRow2()][move.getColumn2()] = pawn;
-            if(Math.abs(move.getRow2() - move.getRow1()) == 2 || Math.abs(move.getColumn2() - move.getColumn1())== 2){
+            if(nbMovingMin(move) == 2){
                 field[move.getRow1()][move.getColumn1()]=null;
             }
             for (int i = -1; i<=1;i++) {
                 for(int j = -1; j<=1;j++) {
-                    Move move1 = new Move(move.getRow2()-i, move.getColumn2()-j, move.getRow2()-i, move.getColumn2() -j);
-
-                    if (isValid(move1, player) && !caseIsEmpty(move.getRow2() - i, move.getColumn2()) && !PawnAndPlayers(player, move1)) {
-                        movePawn(move1);
+                    Move move1 = new Move(move.getRow2(), move.getColumn2(), move.getRow2()+i, move.getColumn2() +j);
+                    if (coordonnesInField(move1) && !caseIsEmpty(move1.getRow2(), move1.getColumn2())) {
+                        field[move.getRow2()+i][move.getColumn2()+j] = pawn;
                     }
                 }
             }
-        }
+
     }
 
     /**
@@ -197,5 +194,21 @@ public class Board {
             return true;
         }
         return false;
+    }
+
+    /**Retourne le nombre de coups minimum**/
+
+    public int nbMovingMin(Move move){
+        int nbRow = Math.abs(move.getRow2() - move.getRow1());
+        int nbCol =  Math.abs(move.getColumn2() - move.getColumn1());
+        if(nbRow == nbCol){
+            return nbRow - 1;
+        }
+        else if(nbRow == 0 || nbCol == 0){
+            return nbRow + nbCol;
+        }
+        else{
+            return nbRow + nbCol - 1;
+        }
     }
 }
