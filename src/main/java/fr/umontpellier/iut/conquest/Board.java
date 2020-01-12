@@ -202,7 +202,7 @@ public class Board {
         int nbRow = Math.abs(move.getRow2() - move.getRow1());
         int nbCol =  Math.abs(move.getColumn2() - move.getColumn1());
         if(nbRow == nbCol){
-            return nbRow - 1;
+            return nbRow;
         }
         else if(nbRow == 0 || nbCol == 0){
             return nbRow + nbCol;
