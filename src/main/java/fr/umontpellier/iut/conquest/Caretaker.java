@@ -6,21 +6,12 @@ import java.util.Deque;
 public class Caretaker {
     final Deque<Memento> mementos = new ArrayDeque<>();
 
-    public Memento getMemento()
-
-    {
-
+    public Memento getMemento() {
         Memento memento= mementos.pop();
-
         return memento;
-
     }
 
-    public void addMemento(Memento memento)
-
-    {
-
+    public void addMemento(Memento memento)   {
         mementos.push(memento);
-
     }
 }
