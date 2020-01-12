@@ -211,4 +211,13 @@ public class Board {
             return nbRow + nbCol - 1;
         }
     }
+
+    public Memento saveToMemento() {
+        Memento memento = new Memento(this.field);
+        return memento;
+    }
+
+    public void undoFromMemento(Memento memento){
+        this.field = memento.getField();
+    }
 }

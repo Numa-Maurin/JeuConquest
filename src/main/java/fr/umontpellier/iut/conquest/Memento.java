@@ -5,20 +5,19 @@ import fr.umontpellier.iut.conquest.strategies.Strategy;
 import java.util.Scanner;
 
 public class Memento {
-    /**
-     * Scanner permettant de lire les entrées.
-     */
-    private static Scanner scan;
-    /**
-     * Le plateau de jeu.
-     */
-    private Board board;
-    /**
-     * Les joueurs.
-     */
-    private Player[] players = new Player[2];
+    private Pawn[][] field;
 
-    public Memento(Board board) {
+    /**
+     * @param field
+     */
+    public Memento(Pawn[][] field) {
+        this.field = field;
+    }
 
+    /**
+     * @return the field
+     */
+    public Pawn[][] getField() {
+        return field;
     }
 }

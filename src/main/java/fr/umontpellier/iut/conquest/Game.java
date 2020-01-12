@@ -176,10 +176,5 @@ public class Game {
     private Player confirmOrUndoMove(Player player) {
         throw new RuntimeException("Not implemented");
     }
-
-    public Memento saveToMemento() {
-        Memento memento = new Memento(getBoard());
-        return memento;
-    }
 }
 
