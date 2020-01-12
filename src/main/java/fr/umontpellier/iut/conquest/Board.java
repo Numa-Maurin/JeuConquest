@@ -150,8 +150,8 @@ public class Board {
     }
 
     /**
-     * Retourne la liste de tous les coups valides de Hplayer.
-     * S'il n'y a de coup valide, retourne une liste vide.
+     * Retourne la liste de tous les coups valides de player.
+     * S'il n'y a pas de coup valide, retourne une liste vide.
      */
     public List<Move> getValidMoves(Player player) {
         List l = new ArrayList<Move>();
