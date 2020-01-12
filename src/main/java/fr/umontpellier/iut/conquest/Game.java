@@ -25,6 +25,9 @@ public class Game {
      */
     private Player[] players = new Player[2];
 
+    /** Le Caretaker **/
+    private Caretaker boardCaretaker = new Caretaker();
+
     /**
      * Constructeur.
      * Crée un plateau à partir de sa taille (impaire).
@@ -174,7 +177,25 @@ public class Game {
      * @return Player : le joueur dont il est le tour de jouer.
      */
     private Player confirmOrUndoMove(Player player) {
-        throw new RuntimeException("Not implemented");
+        if(boardCaretaker.getMemento() != null){
+            int reculer;
+            System.out.println("Reculer (1) ou non (0) ?");
+            reculer = scan.nextInt();
+            while(reculer >= 0 && reculer <2){
+                System.out.println("Veuillez saisir soit Reculer (1) soit Ne pas reculer (0)");
+                reculer = scan.nextInt();
+            }
+            if(reculer == 1){
+                board.undoFromMemento(boardCaretaker.getMemento());
+            }
+            else {
+                boardCaretaker.addMemento(getBoard().saveToMemento());
+            }
+            return player;
+        }
+        System.out.println("Vous êtes au début de la partie, vous ne pouvez pas reculer");
+        return player;
+
     }
 }
 
