@@ -177,7 +177,7 @@ public class Game {
      * @return Player : le joueur dont il est le tour de jouer.
      */
     private Player confirmOrUndoMove(Player player) {
-        if(boardCaretaker.getMemento() != null){
+        if(!boardCaretaker.isEmpty()){
             int reculer;
             System.out.println("Reculer (1) ou non (0) ?");
             reculer = scan.nextInt();
@@ -185,7 +185,7 @@ public class Game {
                 System.out.println("Veuillez saisir soit Reculer (1) soit Ne pas reculer (0)");
                 reculer = scan.nextInt();
             }
-            if(reculer == 1){
+            if(reculer == 0){
                 board.undoFromMemento(boardCaretaker.getMemento());
             }
             else {

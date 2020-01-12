@@ -14,4 +14,8 @@ public class Caretaker {
     public void addMemento(Memento memento)   {
         mementos.push(memento);
     }
+
+    public boolean isEmpty(){
+        return mementos.isEmpty();
+    }
 }
