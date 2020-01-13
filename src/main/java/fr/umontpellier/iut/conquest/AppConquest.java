@@ -1,7 +1,7 @@
 package fr.umontpellier.iut.conquest;
 
 import fr.umontpellier.iut.conquest.strategies.Human;
-import fr.umontpellier.iut.conquest.strategies.MinMax;
+import fr.umontpellier.iut.conquest.strategies.Minmax;
 import fr.umontpellier.iut.conquest.strategies.Naive;
 import fr.umontpellier.iut.conquest.strategies.Strategy;
 
@@ -115,15 +115,15 @@ public class AppConquest {
             return new Naive();
         }
         else if (AILevel == 1 ){
-            return new MinMax();
+            return new Minmax(1);
         }
         else if (AILevel == 2){
-            return new MinMax();
+            return new Minmax(2);
         }
         else if (AILevel == 3){
-            return new MinMax();
+            return new Minmax(3);
         }
-            return new MinMax();
+            return new Minmax(4);
     }
 
     private static int chooseHardcore(Scanner scan) {

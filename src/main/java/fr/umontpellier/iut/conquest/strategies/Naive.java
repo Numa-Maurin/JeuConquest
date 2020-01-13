@@ -6,7 +6,7 @@ import fr.umontpellier.iut.conquest.Player;
 
 public class Naive implements Strategy{
 
-    public Naive (){};
+    public Naive (){}
 
     /** doit retourner un coup valide**/
 
