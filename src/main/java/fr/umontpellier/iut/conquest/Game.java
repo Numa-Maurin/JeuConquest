@@ -115,8 +115,8 @@ public class Game {
      * Initialise le jeu.
      */
     private void initGame() {
-        getBoard().initField(players[0], players[1]);
-        boardCaretaker.addMemento(getBoard().saveToMemento());
+        board.initField(players[0], players[1]);
+        boardCaretaker.addMemento(board.saveToMemento());
     }
 
     /**
@@ -138,13 +138,13 @@ public class Game {
      * - La partie est finie quand l'un des deux joueurs n'a plus de pions.
      */
     public boolean isFinished() {
-        if (getBoard().getNbPawns(players[0]) == 0 || getBoard().getNbPawns(players[1]) == 0){
+        if (board.getNbPawns(players[0]) == 0 || board.getNbPawns(players[1]) == 0){
             return true;
         }
         else{
-            for(int i = 0 ; i < getBoard().getSize()-1; i++){
-                for(int j = 0 ; j < getBoard().getSize()-1; j++){
-                    if(getBoard().caseIsEmpty(i,j)){
+            for(int i = 0 ; i < board.getSize()-1; i++){
+                for(int j = 0 ; j < board.getSize()-1; j++){
+                    if(board.caseIsEmpty(i,j)){
                         return false;
                     }
                 }
@@ -159,7 +159,7 @@ public class Game {
      * Rappel : Le joueur qui gagne est celui qui possède le plus de pions.
      */
     public Player getWinner() {
-        if(getBoard().getNbPawns(players[0]) - getBoard().getNbPawns(players[1])>0){
+        if(board.getNbPawns(players[0]) - board.getNbPawns(players[1])>0){
             return players[0];
         }
         else{
@@ -178,8 +178,7 @@ public class Game {
      * @return Player : le joueur dont il est le tour de jouer.
      */
     private Player confirmOrUndoMove(Player player) {
-        if(!boardCaretaker.isEmpty()){
-            Memento memento = getBoard().saveToMemento();
+            Memento memento = board.saveToMemento();
             int reculer;
             System.out.println("Reculer (1) ou non (0) ?");
             reculer = scan.nextInt();
@@ -190,20 +189,25 @@ public class Game {
                 reculer = scan.nextInt();
                 scan.nextLine();
             }
-            if(reculer == 1 && !board.getValidMoves(player).isEmpty()){
-                board.undoFromMemento(boardCaretaker.getMemento());
-                board.movePawn(player.play());
-                player = confirmOrUndoMove(player);
+            if(reculer == 1){
+                Memento memento1 = boardCaretaker.getMemento();
+                System.out.println(memento1);
+                board.undoFromMemento(memento1);
+                boardCaretaker.addMemento(memento1);
+                if(boardCaretaker.getSize() == 1){
+                    System.out.println("Vous êtes au début de la partie");
+                    return getOtherPlayer(player);
+                }
+                else{
+                    return  confirmOrUndoMove(getOtherPlayer(player));
+                }
+
             }
             else{
                 boardCaretaker.addMemento(memento);
+                return player;
             }
-            return player;
+
         }
-        System.out.println("Vous êtes au début de la partie, vous ne pouvez pas reculer");
-        return player;
-
-
-    }
 }
 

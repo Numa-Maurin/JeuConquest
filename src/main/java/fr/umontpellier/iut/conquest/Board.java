@@ -95,7 +95,7 @@ public class Board {
      */
     public boolean isValid(Move move, Player player) {
         if (move != null) {
-            return coordonnesInField(move) && PawnAndPlayers(player, move) && CaseFree(move) && DistanceLessThan2(move);
+            return coordonnesInField(move) && pawnAndPlayers(player, move) && caseFree(move) && distanceLessThan2(move);
         }
         return false;
     }
@@ -104,18 +104,18 @@ public class Board {
         return move.getColumn2() <= field.length - 1 && move.getColumn1() <= field.length - 1 && move.getColumn2() >= 0 && move.getColumn1() >= 0 && move.getRow2() <= field.length - 1 && move.getRow1() <= field.length - 1 && move.getRow2() >= 0 && move.getRow1() >= 0;
     }
 
-    public boolean PawnAndPlayers(Player player, Move move){
+    public boolean pawnAndPlayers(Player player, Move move){
         if(field[move.getRow1()][move.getColumn1()] != null){
             return player.getColor() == field[move.getRow1()][move.getColumn1()].getPlayer().getColor();
         }
         return false;
     }
 
-    public boolean CaseFree(Move move){
+    public boolean caseFree(Move move){
         return caseIsEmpty(move.getRow2(), move.getColumn2());
     }
 
-    public boolean DistanceLessThan2(Move move){
+    public boolean distanceLessThan2(Move move){
         if (nbMovingMin(move ) <= 2 ){
             return true;
         }
