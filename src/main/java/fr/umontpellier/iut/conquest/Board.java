@@ -95,7 +95,7 @@ public class Board {
      */
     public boolean isValid(Move move, Player player) {
         if (move != null) {
-            return coordonnesInField(move) && pawnAndPlayers(player, move) && caseFree(move) && distanceLessThan2(move);
+            return coordonnesInField(move) && pawnAndPlayers(player, move.getRow1(), move.getColumn1()) && caseFree(move) && distanceLessThan2(move);
         }
         return false;
     }
@@ -104,9 +104,9 @@ public class Board {
         return move.getColumn2() <= field.length - 1 && move.getColumn1() <= field.length - 1 && move.getColumn2() >= 0 && move.getColumn1() >= 0 && move.getRow2() <= field.length - 1 && move.getRow1() <= field.length - 1 && move.getRow2() >= 0 && move.getRow1() >= 0;
     }
 
-    public boolean pawnAndPlayers(Player player, Move move){
-        if(field[move.getRow1()][move.getColumn1()] != null){
-            return player.getColor() == field[move.getRow1()][move.getColumn1()].getPlayer().getColor();
+    public boolean pawnAndPlayers(Player player, int i, int j ){
+        if(field[i][j] != null){
+            return player.getColor() == field[i][j].getPlayer().getColor();
         }
         return false;
     }
@@ -213,10 +213,37 @@ public class Board {
     }
 
     public Memento saveToMemento() {
-        return new Memento(this.field);
+        return new Memento(deepCopyField(this.field));
     }
 
     public void undoFromMemento(Memento memento){
         this.field = memento.getField();
     }
+
+    public Pawn[][] deepCopyField(Pawn[][] field){
+        Pawn[][] copieField = new Pawn[field.length][field.length];
+        for(int i = 0; i < field.length; i++){
+            for(int j = 0; j < field.length; j++){
+                if(!(field[i][j] == null)) {
+                    copieField[i][j] = new Pawn(field[i][j].getPlayer());
+                }
+            }
+        }
+        return copieField;
+
+    }
+
+    public int nbPanwsChanged(Move move){
+        int compteur = 0;
+        for (int i = -1; i<=1;i++) {
+            for(int j = -1; j<=1;j++) {
+                Move move1 = new Move(move.getRow2(), move.getColumn2(), move.getRow2()+i, move.getColumn2() +j);
+                if (coordonnesInField(move1) && !caseIsEmpty(move1.getRow2(), move1.getColumn2())) {
+                    compteur++;
+                }
+            }
+        }
+        return compteur;
+    }
+
 }

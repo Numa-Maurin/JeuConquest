@@ -11,14 +11,7 @@ public class Memento {
      * @param field
      */
     public Memento(Pawn[][] field) {
-        this.field = new Pawn[field.length][field.length];
-        for(int i = 0; i < field.length; i++){
-            for(int j = 0; j < field.length; j++){
-                if(!(field[i][j] == null)) {
-                    this.field[i][j] = new Pawn(field[i][j].getPlayer());
-                }
-            }
-        }
+        this.field = field;
     }
 
     /**

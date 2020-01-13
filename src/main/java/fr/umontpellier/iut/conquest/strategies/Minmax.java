@@ -21,28 +21,33 @@ public class Minmax implements Strategy {
         this.level = level;
     }
 
+    public int minmax(Player player, Board board){
+        return board.getNbPawns(player) - board.getNbPawns(player.getGame().getOtherPlayer(player));
+    }
+
     /**
      * Retourne un coup valide à partir du niveau d'intelligence.
      */
     public Move getMove(Board board, Player player) {
-        List l = new ArrayList<>();
-        int nbPawns;
-        int max;
+        Move move;
+        int max = 0;
         if (this.level == 1){
-            for (Move move: board.getValidMoves(player)) {
-                nbPawns = board.getNbPawns(player);
-                l.add(nbPawns);
+            //Détermine le max
+            for (Move moveBis : board.getValidMoves(player)) {
+                if(max < board.nbPanwsChanged(moveBis)){
+                    max = board.nbPanwsChanged(moveBis);
+                }
+
             }
-            for (int i=0; i<l.size(); i++){
-                int depart = 0;
-                if (depart < l.get(i)){
-                    depart = l.get(i);
-                    max = i;
+            //Bouge le premier qui correspond au max
+            for(Move move1 : board.getValidMoves(player)){
+                if(max == board.nbPanwsChanged(move1)){
+                    return move1;
                 }
             }
-            return board.getValidMoves(player).get(max);
         }
         if (this.level == 2){
+
 
         }
         if (this.level == 3){
@@ -51,8 +56,17 @@ public class Minmax implements Strategy {
         if (this.level == 4){
 
         }
-        Move move = new Move(1,2,3,4);
-        return move;
+        //Move move = new Move(1,2,3,4);
+
+        int min = 0;
+        for (Move moveBis : board.getValidMoves(player)) {
+            if(min < board.nbPanwsChanged(moveBis)){
+                min =  board.nbPanwsChanged(moveBis);
+                break;
+            }
+        }
+        return null;
+
     }
 
 }

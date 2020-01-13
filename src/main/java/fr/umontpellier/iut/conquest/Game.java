@@ -179,38 +179,27 @@ public class Game {
      */
     private Player confirmOrUndoMove(Player player) {
             //Demande au joueur de reculer ou pas
-            String message = player.getName()+" : "+"Veuillez saisir soit Reculer (1) soit Ne pas reculer (0)";
-            int reculer;
-            System.out.println(message);
-            reculer = scan.nextInt();
-            scan.nextLine();
-            //Vérifie que le nombre est soit 1 soit 0
-            while(reculer < 0 || reculer > 1){
-                System.out.println(message);
-                reculer = scan.nextInt();
-                scan.nextLine();
-            }
+            int cancel = chooseCancelDraw(player);
             //Si c'est 1 on doit mettre à jour le board depuis la derniere sauvegarde dans Caretaker
-            if(reculer == 1){
-                //Si il ne reste plus que la sauvegarde initiale, on la télécharge puis la rajoute à caretaker et on fait rejouer le joueur (le problème est là)
+            while (boardCaretaker.getSize() > 0 && cancel == 1){
+                board.undoFromMemento(boardCaretaker.getMemento());
+                player = getOtherPlayer(player);
                 if(boardCaretaker.getSize() == 1){
-                    Memento memento1 = boardCaretaker.getMemento();
-                    System.out.println(memento1);
-                    board.undoFromMemento(memento1);
-                    boardCaretaker.addMemento(memento1);
-                    return getOtherPlayer(player);
-                }
-                //Si il y a plein de sauvegarde
-                else{
-                    board.undoFromMemento(boardCaretaker.getMemento());
-                    return confirmOrUndoMove(getOtherPlayer(player));
+                    cancel = chooseCancelDraw(player);
                 }
             }
-            else{
-                //Si c'est 0 on ajoute la dernière sauvegarde (après le coup joué) et on passe au suivant
-                boardCaretaker.addMemento(board.saveToMemento());
-                return player;
+            boardCaretaker.addMemento(board.saveToMemento());
+            return player;
+        }
+
+        public int chooseCancelDraw(Player player){
+            System.out.println(player.getName() + " : " + "Veuillez saisir soit Reculer (1) soit Ne pas reculer (0)");
+            int cancel = scan.nextInt();
+            while(cancel < 0 || cancel > 1) {
+                System.out.println(player.getName() + " : " + "Veuillez saisir soit Reculer (1) soit Ne pas reculer (0)");
+                cancel = scan.nextInt();
             }
+            return scan.nextInt();
         }
 }
 
