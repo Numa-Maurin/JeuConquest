@@ -178,36 +178,39 @@ public class Game {
      * @return Player : le joueur dont il est le tour de jouer.
      */
     private Player confirmOrUndoMove(Player player) {
-            Memento memento = board.saveToMemento();
+            //Demande au joueur de reculer ou pas
+            String message = player.getName()+" : "+"Veuillez saisir soit Reculer (1) soit Ne pas reculer (0)";
             int reculer;
-            System.out.println("Reculer (1) ou non (0) ?");
+            System.out.println(message);
             reculer = scan.nextInt();
             scan.nextLine();
-
+            //Vérifie que le nombre est soit 1 soit 0
             while(reculer < 0 || reculer > 1){
-                System.out.println("Veuillez saisir soit Reculer (1) soit Ne pas reculer (0)");
+                System.out.println(message);
                 reculer = scan.nextInt();
                 scan.nextLine();
             }
+            //Si c'est 1 on doit mettre à jour le board depuis la derniere sauvegarde dans Caretaker
             if(reculer == 1){
-                Memento memento1 = boardCaretaker.getMemento();
-                System.out.println(memento1);
-                board.undoFromMemento(memento1);
-                boardCaretaker.addMemento(memento1);
+                //Si il ne reste plus que la sauvegarde initiale, on la télécharge puis la rajoute à caretaker et on fait rejouer le joueur (le problème est là)
                 if(boardCaretaker.getSize() == 1){
-                    System.out.println("Vous êtes au début de la partie");
+                    Memento memento1 = boardCaretaker.getMemento();
+                    System.out.println(memento1);
+                    board.undoFromMemento(memento1);
+                    boardCaretaker.addMemento(memento1);
                     return getOtherPlayer(player);
                 }
+                //Si il y a plein de sauvegarde
                 else{
-                    return  confirmOrUndoMove(getOtherPlayer(player));
+                    board.undoFromMemento(boardCaretaker.getMemento());
+                    return confirmOrUndoMove(getOtherPlayer(player));
                 }
-
             }
             else{
-                boardCaretaker.addMemento(memento);
+                //Si c'est 0 on ajoute la dernière sauvegarde (après le coup joué) et on passe au suivant
+                boardCaretaker.addMemento(board.saveToMemento());
                 return player;
             }
-
         }
 }
 
