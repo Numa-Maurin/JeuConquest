@@ -3,6 +3,7 @@ package fr.umontpellier.iut.conquest.strategies;
 
 import fr.umontpellier.iut.conquest.Board;
 import fr.umontpellier.iut.conquest.Move;
+import fr.umontpellier.iut.conquest.Pawn;
 import fr.umontpellier.iut.conquest.Player;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,60 +22,36 @@ public class Minmax implements Strategy {
         this.level = level;
     }
 
-    public int minimax(Player player, Board board){
-        return maxTurn(board, player) - minTurn(board, player);
-    }
-
-    public int maxTurn(Board board, Player player){
-        int max = 0;
-        //Détermine le max
-        for (Move moveBis : board.getValidMoves(player)) {
-            if(max < board.nbPanwsChanged(moveBis)){
-                max = board.nbPanwsChanged(moveBis);
+    public int minimax(Player player, Board board, int level, Move move0){
+        if(level == 0 || player.getGame().isFinished()){
+            return  board.getNbPawns(player);
+        }
+        if(level % 2 != 0){
+            int value = 0;
+            for(Move move : board.getValidMoves(player.getGame().getOtherPlayer(player))){
+                value = Math.max(value, minimax(player.getGame().getOtherPlayer(player),board, level-1, move));
             }
+            return value;
 
         }
-        return max;
-
-    }
-
-    public int minTurn(Board board, Player player){
-        int min = 0;
-        for (Move moveBis : board.getValidMoves(player)) {
-            if(min < board.nbPanwsChanged(moveBis)){
-                min = board.nbPanwsChanged(moveBis);
+        else{
+            int value = 0;
+            for(Move move : board.getValidMoves(player.getGame().getOtherPlayer(player))){
+                value = Math.min(value, minimax(player.getGame().getOtherPlayer(player),board, level-1, move));
             }
+            return value;
         }
-        return min;
     }
+
+    //maxTurn(board, player) - minTurn(board, player.getGame().getOtherPlayer(player));
 
     /**
      * Retourne un coup valide à partir du niveau d'intelligence.
      */
     public Move getMove(Board board, Player player) {
-        int bestChoice;
-        if (this.level == 1){
-            return getBestMove(minimax(player, board), board, player);
-        }
-        if (this.level == 2){
-
-
-        }
-        if (this.level == 3){
-
-        }
-        if (this.level == 4){
-
-        }
-        //Move move = new Move(1,2,3,4);
-        return null;
-    }
-
-    public Move getBestMove(int numberBestChoice, Board board, Player player){
-        //Bouge le premier qui correspond au meilleur choix
-        for(Move move1 : board.getValidMoves(player)){
-            if(numberBestChoice == board.nbPanwsChanged(move1)){
-                return move1;
+        for(Move move : board.getValidMoves(player)){
+            if(minimax(player, new Board(new Pawn[board.getSize()][board.getSize()]), level, move) == board.nbPanwsChanged(move)){
+                return move;
             }
         }
         return null;
