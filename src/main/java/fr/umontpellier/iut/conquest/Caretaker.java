@@ -15,7 +15,7 @@ public class Caretaker {
         mementos.push(memento);
     }
 
-    public int getSize(){
-        return mementos.size();
+    public boolean isEmpty(){
+        return mementos.isEmpty();
     }
 }

@@ -181,10 +181,10 @@ public class Game {
             //Demande au joueur de reculer ou pas
             int cancel = chooseCancelDraw(player);
             //Si c'est 1 on doit mettre à jour le board depuis la derniere sauvegarde dans Caretaker
-            while (boardCaretaker.getSize() > 0 && cancel == 1){
+            while (!boardCaretaker.isEmpty() && cancel == 1){
                 board.undoFromMemento(boardCaretaker.getMemento());
                 player = getOtherPlayer(player);
-                if(boardCaretaker.getSize() > 0){
+                if(!boardCaretaker.isEmpty()){
                     cancel = chooseCancelDraw(player);
                 }
             }
