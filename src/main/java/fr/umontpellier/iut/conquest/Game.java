@@ -184,7 +184,7 @@ public class Game {
             while (boardCaretaker.getSize() > 0 && cancel == 1){
                 board.undoFromMemento(boardCaretaker.getMemento());
                 player = getOtherPlayer(player);
-                if(boardCaretaker.getSize() == 1){
+                if(boardCaretaker.getSize() > 0){
                     cancel = chooseCancelDraw(player);
                 }
             }
@@ -199,7 +199,7 @@ public class Game {
                 System.out.println(player.getName() + " : " + "Veuillez saisir soit Reculer (1) soit Ne pas reculer (0)");
                 cancel = scan.nextInt();
             }
-            return scan.nextInt();
+            return cancel;
         }
 }
 
