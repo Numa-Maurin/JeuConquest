@@ -24,7 +24,7 @@ public class Minmax implements Strategy {
 
     public int minimax(Player player, Board board, Move move0, int level, boolean currentPlayer){
         board.movePawn(move0);
-        if(level == 1 ||/*board.getValidMoves(player).isEmpty()||*/player.getGame().isFinished()){
+        if(level == 1 ||board.getValidMoves(player).isEmpty()||player.getGame().isFinished()){
             return  board.getNbPawns(player)-board.getNbPawns(player.getGame().getOtherPlayer(player));
         }
         if(currentPlayer){
