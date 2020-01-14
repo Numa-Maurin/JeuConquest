@@ -51,7 +51,7 @@ public class Minmax implements Strategy {
      */
     public Move getMove(Board board, Player player) {
         for(Move move : board.getValidMoves(player)){
-            if(minimax(player, new Board(new Pawn[board.getSize()][board.getSize()]), level, move) == (board.nbPanwsChanged(move, player)+ board.getNbPawns(player))){
+            if(minimax(player, board, level, move) == (board.nbPanwsChanged(move, player)+board.getNbPawns(player))){
                 return move;
             }
         }
