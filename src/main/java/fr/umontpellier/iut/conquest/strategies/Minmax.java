@@ -28,17 +28,17 @@ public class Minmax implements Strategy {
             return  board.getNbPawns(player)-board.getNbPawns(player.getGame().getOtherPlayer(player));
         }
         if(currentPlayer){
-            int value = -1000000;
+            int value = -10000000;
             for(Move move : board.getValidMoves(player)){
-                value = Math.max(value, minimax(player,board, move, level-1, false));
+                value = Math.max(value, minimax(player,new Board(board.deepCopyField()), move, level-1, false));
             }
             return value;
 
         }
         else{
-            int value = 1000000;
+            int value = 10000000;
             for(Move move : board.getValidMoves(player.getGame().getOtherPlayer(player))){
-                value = Math.min(value, minimax(player,board, move, level-1, true));
+                value = Math.min(value, minimax(player,new Board(board.deepCopyField()), move, level-1, true));
             }
             return value;
         }
