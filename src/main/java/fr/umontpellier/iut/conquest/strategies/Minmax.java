@@ -1,6 +1,5 @@
 package fr.umontpellier.iut.conquest.strategies;
 
-
 import fr.umontpellier.iut.conquest.Board;
 import fr.umontpellier.iut.conquest.Move;
 import fr.umontpellier.iut.conquest.Pawn;
