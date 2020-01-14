@@ -48,12 +48,16 @@ public class Minmax implements Strategy {
      * Retourne un coup valide à partir du niveau d'intelligence.
      */
     public Move getMove(Board board, Player player) {
+        int drawValue = 0;
+        Move bestMove = board.getValidMoves(player).get(0);
         for(Move move : board.getValidMoves(player)){
-            if(minimax(player, new Board(board.deepCopyField()), move, level, true) == (board.nbPanwsChanged(move, player)+board.getNbPawns(player))){
-                return move;
+            bestMove = move;
+            if(minimax(player, new Board(board.deepCopyField()), move, level, true) > drawValue){
+                drawValue = minimax(player, new Board(board.deepCopyField()), move, level, true);
+                bestMove = move;
             }
         }
-        return null;
+        return bestMove;
     }
 
 }
