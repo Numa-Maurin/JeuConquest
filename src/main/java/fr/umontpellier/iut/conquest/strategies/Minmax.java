@@ -21,15 +21,16 @@ public class Minmax implements Strategy {
         this.level = level;
     }
 
-    public int minimax(Player player, Board board, Move move0, int level, boolean currentPlayer){
-        board.movePawn(move0);
+    public int minimax(Player player, Board board, int level, boolean currentPlayer){
         if(level == 1 ||board.getValidMoves(player).isEmpty()||player.getGame().isFinished()){
             return  board.getNbPawns(player)-board.getNbPawns(player.getGame().getOtherPlayer(player));
         }
         if(currentPlayer){
             int value = Integer.MIN_VALUE;
             for(Move move : board.getValidMoves(player)){
-                value = Math.max(value, minimax(player,new Board(board.deepCopyField()), move, level-1, false));
+                Board board1 = new Board(board.deepCopyField());
+                board1.movePawn(move);
+                value = Math.max(value, minimax(player,board1, level-1, false));
             }
             return value;
 
@@ -37,7 +38,9 @@ public class Minmax implements Strategy {
         else{
             int value = Integer.MAX_VALUE;
             for(Move move : board.getValidMoves(player.getGame().getOtherPlayer(player))){
-                value = Math.min(value, minimax(player,new Board(board.deepCopyField()), move, level-1, true));
+                Board board1 = new Board(board.deepCopyField());
+                board1.movePawn(move);
+                value = Math.min(value, minimax(player,board1, level-1, true));
             }
             return value;
         }
@@ -51,7 +54,7 @@ public class Minmax implements Strategy {
         int currentDrawValue;
         Move bestMove = null;
         for(Move move : board.getValidMoves(player)){
-            currentDrawValue = minimax(player, new Board(board.deepCopyField()), move, level, false);
+            currentDrawValue = minimax(player, new Board(board.deepCopyField()), level, true);
             if(currentDrawValue> drawValue){
                 drawValue = currentDrawValue;
                 bestMove = move;
