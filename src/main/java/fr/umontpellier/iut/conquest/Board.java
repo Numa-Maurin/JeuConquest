@@ -213,14 +213,14 @@ public class Board {
     }
 
     public Memento saveToMemento() {
-        return new Memento(deepCopyField(this.field));
+        return new Memento(this.deepCopyField());
     }
 
     public void undoFromMemento(Memento memento){
         this.field = memento.getField();
     }
 
-    public Pawn[][] deepCopyField(Pawn[][] field){
+    public Pawn[][] deepCopyField(){
         Pawn[][] copieField = new Pawn[field.length][field.length];
         for(int i = 0; i < field.length; i++){
             for(int j = 0; j < field.length; j++){

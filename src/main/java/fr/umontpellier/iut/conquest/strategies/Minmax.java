@@ -44,14 +44,12 @@ public class Minmax implements Strategy {
         }
     }
 
-    //maxTurn(board, player) - minTurn(board, player.getGame().getOtherPlayer(player));
-
     /**
      * Retourne un coup valide à partir du niveau d'intelligence.
      */
     public Move getMove(Board board, Player player) {
         for(Move move : board.getValidMoves(player)){
-            if(minimax(player, board, level, move) == (board.nbPanwsChanged(move, player)+board.getNbPawns(player))){
+            if(minimax(player, new Board(board.deepCopyField()), level, move) == (board.nbPanwsChanged(move, player)+board.getNbPawns(player))){
                 return move;
             }
         }
