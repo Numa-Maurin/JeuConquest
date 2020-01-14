@@ -24,7 +24,7 @@ public class Minmax implements Strategy {
 
     public int minimax(Player player, Board board, Move move0, int level, boolean currentPlayer){
         board.movePawn(move0);
-        if(level == 0 || player.getGame().isFinished()){
+        if(level == 1 ||/*board.getValidMoves(player).isEmpty()||*/player.getGame().isFinished()){
             return  board.getNbPawns(player)-board.getNbPawns(player.getGame().getOtherPlayer(player));
         }
         if(currentPlayer){
@@ -49,11 +49,12 @@ public class Minmax implements Strategy {
      */
     public Move getMove(Board board, Player player) {
         int drawValue = 0;
+        int currentDrawValue = 0;
         Move bestMove = board.getValidMoves(player).get(0);
         for(Move move : board.getValidMoves(player)){
-            bestMove = move;
-            if(minimax(player, new Board(board.deepCopyField()), move, level, true) > drawValue){
-                drawValue = minimax(player, new Board(board.deepCopyField()), move, level, true);
+            currentDrawValue = minimax(player, new Board(board.deepCopyField()), move, level, true);
+            if(currentDrawValue> drawValue){
+                drawValue = currentDrawValue;
                 bestMove = move;
             }
         }
