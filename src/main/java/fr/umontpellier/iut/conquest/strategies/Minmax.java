@@ -49,7 +49,7 @@ public class Minmax implements Strategy {
     public Move getMove(Board board, Player player) {
         int drawValue = Integer.MIN_VALUE;
         int currentDrawValue;
-        Move bestMove = board.getValidMoves(player).get(0);
+        Move bestMove = null /*board.getValidMoves(player).get(0)*/;
         for(Move move : board.getValidMoves(player)){
             currentDrawValue = minimax(player, new Board(board.deepCopyField()), move, level, false);
             if(currentDrawValue> drawValue){
