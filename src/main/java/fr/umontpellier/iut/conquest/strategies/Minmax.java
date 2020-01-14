@@ -27,7 +27,7 @@ public class Minmax implements Strategy {
             return  board.getNbPawns(player)-board.getNbPawns(player.getGame().getOtherPlayer(player));
         }
         if(currentPlayer){
-            int value = -10000000;
+            int value = Integer.MIN_VALUE;
             for(Move move : board.getValidMoves(player)){
                 value = Math.max(value, minimax(player,new Board(board.deepCopyField()), move, level-1, false));
             }
@@ -35,7 +35,7 @@ public class Minmax implements Strategy {
 
         }
         else{
-            int value = 10000000;
+            int value = Integer.MAX_VALUE;
             for(Move move : board.getValidMoves(player.getGame().getOtherPlayer(player))){
                 value = Math.min(value, minimax(player,new Board(board.deepCopyField()), move, level-1, true));
             }
@@ -47,11 +47,11 @@ public class Minmax implements Strategy {
      * Retourne un coup valide à partir du niveau d'intelligence.
      */
     public Move getMove(Board board, Player player) {
-        int drawValue = 0;
-        int currentDrawValue = 0;
+        int drawValue = Integer.MIN_VALUE;
+        int currentDrawValue;
         Move bestMove = board.getValidMoves(player).get(0);
         for(Move move : board.getValidMoves(player)){
-            currentDrawValue = minimax(player, new Board(board.deepCopyField()), move, level, true);
+            currentDrawValue = minimax(player, new Board(board.deepCopyField()), move, level, false);
             if(currentDrawValue> drawValue){
                 drawValue = currentDrawValue;
                 bestMove = move;

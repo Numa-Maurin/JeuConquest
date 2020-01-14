@@ -138,20 +138,15 @@ public class Game {
      * - La partie est finie quand l'un des deux joueurs n'a plus de pions.
      */
     public boolean isFinished() {
+        if(board.getNbPawns(players[0]) + board.getNbPawns(players[1]) == board.getSize()*board.getSize()){
+            return true;
+        }
         if (board.getNbPawns(players[0]) == 0 || board.getNbPawns(players[1]) == 0){
             return true;
         }
         else{
-            for(int i = 0 ; i < board.getSize()-1; i++){
-                for(int j = 0 ; j < board.getSize()-1; j++){
-                    if(board.caseIsEmpty(i,j)){
-                        return false;
-                    }
-                }
-            }
-            return true;
+            return false;
         }
-
     }
 
     /**

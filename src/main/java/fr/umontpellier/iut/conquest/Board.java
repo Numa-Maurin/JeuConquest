@@ -232,18 +232,4 @@ public class Board {
         return copieField;
 
     }
-
-    public int nbPanwsChanged(Move move, Player player){
-        int compteur = 0;
-        for (int i = -1; i<=1;i++) {
-            for(int j = -1; j<=1;j++) {
-                Move move1 = new Move(move.getRow2(), move.getColumn2(), move.getRow2()+i, move.getColumn2() +j);
-                if (coordonnesInField(move1) && !caseIsEmpty(move1.getRow2(), move1.getColumn2()) && !player.equals(field[move.getRow2()+i][move.getColumn2()+j].getPlayer())) {
-                    compteur++;
-                }
-            }
-        }
-        return compteur;
-    }
-
 }
