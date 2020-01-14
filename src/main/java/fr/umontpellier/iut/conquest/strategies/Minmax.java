@@ -23,21 +23,22 @@ public class Minmax implements Strategy {
     }
 
     public int minimax(Player player, Board board, int level, Move move0){
+        board.movePawn(move0);
         if(level == 0 || player.getGame().isFinished()){
-            return  board.getNbPawns(player) - board.getNbPawns(player.getGame().getOtherPlayer(player));
+            return  board.getNbPawns(player)-board.getNbPawns(player.getGame().getOtherPlayer(player));
         }
         if(level % 2 != 0){
-            int value = 0;
-            for(Move move : board.getValidMoves(player.getGame().getOtherPlayer(player))){
-                value = Math.max(value, minimax(player.getGame().getOtherPlayer(player),board, level-1, move));
+            int value = -100000;
+            for(Move move : board.getValidMoves(player)){
+                value = Math.max(value, minimax(player,board, level-1, move));
             }
             return value;
 
         }
         else{
-            int value = 0;
+            int value = 100000;
             for(Move move : board.getValidMoves(player.getGame().getOtherPlayer(player))){
-                value = Math.min(value, minimax(player.getGame().getOtherPlayer(player),board, level-1, move));
+                value = Math.min(value, minimax(player,board, level-1, move));
             }
             return value;
         }
@@ -50,7 +51,7 @@ public class Minmax implements Strategy {
      */
     public Move getMove(Board board, Player player) {
         for(Move move : board.getValidMoves(player)){
-            if(minimax(player, new Board(new Pawn[board.getSize()][board.getSize()]), level, move) == board.nbPanwsChanged(move)){
+            if(minimax(player, new Board(new Pawn[board.getSize()][board.getSize()]), level, move) == (board.nbPanwsChanged(move, player)+ board.getNbPawns(player))){
                 return move;
             }
         }
